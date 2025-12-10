@@ -14,10 +14,12 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     $pfp_image = $_POST["pfp_image"]; 
     $game_playing = $_POST["game_playing"];
 
-    $user->registerUser($username, $email, $password, $pfp_image, $game_playing, $rank);
-
-    header("Location: ../index.php");
-    exit();
+    try{
+        $user->registerUser($username, $email, $password, $pfp_image, $game_playing, $rank);
+    }catch(PDOException $e){
+        $message = $e->getMessage();
+        header("Location: ../pages/register.php?register=error");
+        exit();
+    }
 }
-
 ?>
