@@ -88,20 +88,7 @@
         <div class="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-blue-600/10 blur-[150px] rounded-full"></div>
     </div>
 
-    <nav class="w-full z-50 py-6 px-8 flex justify-between items-center">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-nexusGreen text-black flex items-center justify-center rounded skew-x-[-10deg]">
-                <i class="fa-solid fa-bolt text-xl skew-x-[10deg]"></i>
-            </div>
-            <span class="text-2xl font-black font-heading tracking-widest text-white uppercase">Nexus</span>
-        </div>
-        <div class="flex items-center gap-8">
-            <a href="#" class="text-gray-400 hover:text-white font-heading font-bold uppercase tracking-wider text-sm transition-colors">Log In</a>
-            <a href="#" class="bg-white text-black px-6 py-2 rounded font-heading font-bold uppercase tracking-wider text-sm hover:bg-nexusGreen transition-colors shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:shadow-[0_0_20px_rgba(207,255,4,0.6)]">
-                Get Started
-            </a>
-        </div>
-    </nav>
+        <?php include_once("components/header.php") ?>
 
     <main class="flex-grow flex items-center justify-center px-4 relative z-10 w-full max-w-7xl mx-auto">
         <div class="grid lg:grid-cols-2 gap-16 items-center w-full">
