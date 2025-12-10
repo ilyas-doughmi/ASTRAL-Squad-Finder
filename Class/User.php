@@ -20,4 +20,26 @@ class User extends db {
         return $stmt->execute();
     }
 
+    public function loginUser($email,$password){
+        $query = "SELECT * FROM users WHERE email =:email";
+        $stmt= $this->connect()->prepare($query);
+        $stmt->bindParam(":email",$email);
+        $stmt->execute();
+
+        if($stmt->rowCount() === 0){
+            return "Email Not Found";
+        }
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if(!password_verify($password,$user["password"])){
+            return "Password Incorrect";
+        }
+
+        session_start();
+        $_SESSION["id"] = $user["id"];
+        $_SESSION["username"] = $user["user_name"];
+        $_SESSION["email"] = $user["email"];
+    }
+
 }
