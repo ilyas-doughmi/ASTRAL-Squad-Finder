@@ -56,4 +56,15 @@ class User extends db {
         }
     }
 
+    public function getAllUsers(){
+        $query = "SELECT * FROM users";
+        $stmt = $this->connect()->query($query);
+        
+        try{
+            $stmt->execute();
+            return $stmt->fetchAll();
+        }catch(PDOException $e){
+            return $e->getMessage();
+        }
+    }
 }
