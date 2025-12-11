@@ -226,9 +226,7 @@ if (!$isloggedin) { ?>
                         <img src="https://mmos.com/wp-content/uploads/2021/06/valorant-heroes-grayscale-banner.jpg" class="w-full h-full object-cover opacity-60">
                         <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#1a1a1a]"></div>
                         
-                        <div class="floating-badge absolute -bottom-6 right-6 w-16 h-16 bg-purple-900 rounded-full border-2 border-purple-400 flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.5)] z-20">
-                            <i class="fa-solid fa-gem text-2xl text-white"></i>
-                        </div>
+                      
                     </div>
 
                     <div class="p-6 pt-2">

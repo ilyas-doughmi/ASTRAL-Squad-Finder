@@ -256,7 +256,7 @@ $user_info = $user->getUserInfo($_SESSION["id"]);
 
                 <div>
                     <div class="flex justify-between items-end mb-6">
-                        <h3 class="text-xl font-heading font-bold uppercase tracking-wider border-l-4 border-nexusGreen pl-3">Onl </h3>
+                        <h3 class="text-xl font-heading font-bold uppercase tracking-wider border-l-4 border-nexusGreen pl-3">Online Friends</h3>
                         <span class="text-xs text-gray-500 uppercase font-mono cursor-pointer hover:text-white transition">Manage Friends</span>
                     </div>
 
