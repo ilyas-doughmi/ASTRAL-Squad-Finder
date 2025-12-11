@@ -6,11 +6,7 @@ session_start();
     $friendObj = new Friend;
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $reciver_id = $_POST["receiver_id"];
-        if($friendObj->addfriend($sender_id,$reciver_id)){
-            echo "friend request sended";
-        }
-        else{
-            echo "problem!";
-        }        
+        $result = $friendObj->addfriend($sender_id,$reciver_id);
+        echo $result;
     }
 ?>
