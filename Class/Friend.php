@@ -15,7 +15,7 @@ class Friend extends db
             return $e->getMessage();
         }
 
-        if ($stmt->rowCount() == 0) {
+        if ($stmt->fetchAll(PDO::FETCH_ASSOC)) {
             return true;
         } else {
             return false;
