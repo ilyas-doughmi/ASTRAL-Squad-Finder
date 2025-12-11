@@ -197,7 +197,7 @@ if (!$isloggedin) { ?>
 
                     <div class="w-20 h-20 rounded-xl mb-4 p-0.5 border-2 border-white/10 group-hover:border-nexusGreen transition-colors relative">
                         <img src="<?= $all["profile_img"] ?>" class="w-full h-full rounded-[10px] object-cover">
-                        <div class="absolute -bottom-2 -right-2 bg-purple-900 text-purple-200 text-[10px] font-bold px-2 py-0.5 rounded border border-purple-500 shadow-lg">
+                        <div class="absolute -bottom-2 -right-2 bg-purple-900 text-purple-200 text-[10px] font-bold px-2 py-0.5 rounded border border-purple-500 shadow-lg ">
                             <?= $all["rank"] ?>
                         </div>
                     </div>
@@ -209,7 +209,7 @@ if (!$isloggedin) { ?>
 
     
 
-                    <button class="w-full bg-white/5 border border-white/10 text-white py-2 rounded font-heading font-bold uppercase text-sm tracking-wider hover:bg-nexusGreen hover:text-black hover:border-nexusGreen transition-all flex items-center justify-center gap-2 group-hover:shadow-[0_0_15px_rgba(207,255,4,0.3)]">
+                    <button onclick="sendinv(<?= $all["id"] ?>)" class="w-full bg-white/5 border border-white/10 text-white py-2 rounded font-heading font-bold uppercase text-sm tracking-wider hover:bg-nexusGreen hover:text-black hover:border-nexusGreen transition-all flex items-center justify-center gap-2 group-hover:shadow-[0_0_15px_rgba(207,255,4,0.3)]">
                         <i class="fa-solid fa-user-plus"></i> Scout Player
                     </button>
                 </div>
@@ -224,5 +224,22 @@ if (!$isloggedin) { ?>
 
     </main>
 
+    <script>
+        function sendinv(id){
+            console.log(id);
+            fetch("../Includes/friend_request/add_friend.php",{
+                method: "POST",
+                headers : {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: "receiver_id=" + id
+            })
+
+            .then(data=> {
+                console.log("php response", data.text);
+            })
+        
+        }
+    </script>
 </body>
 </html>
