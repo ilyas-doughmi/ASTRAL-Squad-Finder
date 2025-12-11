@@ -16,6 +16,8 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
     try{
         $user->registerUser($username, $email, $password, $pfp_image, $game_playing, $rank);
+        header("Location: ../pages/login.php?register=success");
+        exit();
     }catch(PDOException $e){
         $message = $e->getMessage();
         header("Location: ../pages/register.php?register=error");
