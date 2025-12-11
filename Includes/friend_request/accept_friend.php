@@ -7,6 +7,7 @@ session_start();
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $sender_id = $_POST["sender_id"];
-        $result = $friendObj->acceptFriendRequest($sender_id,$receiver_id);
+        $status = $_POST["status"];
+        $result = $friendObj->acceptFriendRequest($sender_id,$receiver_id,$status);
         echo $result;
     }
