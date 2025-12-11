@@ -364,6 +364,8 @@ if (!$isloggedin) { ?>
             method: "POST",
             body: form 
         });
+                getPendingRequests(id);
+
     }
     function rejectFriend(id){
     let form = new FormData();
@@ -373,6 +375,8 @@ if (!$isloggedin) { ?>
             method: "POST",
             body: form 
         });
+                getPendingRequests(id);
+
     }
 </script>
 </body>
