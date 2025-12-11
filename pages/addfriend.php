@@ -181,7 +181,11 @@ if (!$isloggedin) { ?>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <?php foreach($all_users as $all){?>
+        
+        <?php if(count($all_users)  == 0 ){?>
+            <h1>no user found</h1>
+       <?php  }else { ?>
+             <?php foreach($all_users as $all){?>
                <div class="group relative bg-[#0f0f0f] border border-white/10 rounded-2xl p-1 hover:border-nexusGreen/50 transition-all duration-300 hover:-translate-y-1">
                 <div class="absolute inset-0 bg-nexusGreen/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
@@ -211,6 +215,9 @@ if (!$isloggedin) { ?>
                 </div>
             </div>
        <?php  } ?>
+       <?php } ?>
+        
+       
          
 
         </div>
