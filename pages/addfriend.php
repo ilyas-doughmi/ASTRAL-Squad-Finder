@@ -151,7 +151,7 @@ $all_users = $user->getAllUsers($_SESSION["id"]);
                         <a href="profile.php">
                             <div class="relative w-10 h-10">
                                 <div class="absolute inset-0 rounded-lg border border-white/20 group-hover:border-nexusGreen transition-colors"></div>
-                                <img src="<?= $_SESSION["profile"] ?>" class="w-full h-full rounded-lg object-cover p-0.5">
+                                <img src="<?= $user_info["profile_img"] ?>" class="w-full h-full rounded-lg object-cover p-0.5">
                             </div>
                         </a>
 
