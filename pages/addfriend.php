@@ -13,7 +13,7 @@ require_once("../Class/Connexion.php");
 require_once("../Class/User.php");
 $user = new User;
 $user_info = $user->getUserInfo($_SESSION["id"]);
-$all_users = $user->getAllUsers();
+$all_users = $user->getAllUsers($_SESSION["id"]);
 ?>
 
 
