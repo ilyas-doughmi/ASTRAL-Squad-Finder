@@ -126,11 +126,11 @@ if (!$isloggedin) { ?>
                 </a>
 
                 <div class="hidden md:flex items-center gap-8 font-heading font-bold uppercase tracking-wider text-sm h-full">
-                    <a href="lobbies.php" class="text-white h-full flex items-center border-b-2 border-nexusGreen">
+                    <a href="lobbies.php" class="text-gray-500 hover:text-white h-full flex items-center border-b-2 border-transparent hover:border-white/20 transition-colors">
                         Lobby Finder
                     </a>
-                    <a href="my-squad.php" class="text-gray-500 hover:text-white h-full flex items-center border-b-2 border-transparent hover:border-white/20 transition-colors">
-                        My Squad
+                    <a href="addfriend.php" class="text-gray-500 hover:text-white h-full flex items-center border-b-2 border-transparent hover:border-white/20 transition-colors">
+                        Scout Players
                     </a>
                     <a href="scrims.php" class="text-gray-500 hover:text-white h-full flex items-center border-b-2 border-transparent hover:border-white/20 transition-colors">
                         Scrims
@@ -154,7 +154,7 @@ if (!$isloggedin) { ?>
 
                 <div class="flex items-center gap-3 cursor-pointer group">
                     <div class="text-right hidden md:block">
-                        <p class="text-white font-heading font-bold leading-none text-lg group-hover:text-nexusGreen transition-colors">
+                        <p class="font-heading font-bold leading-none text-lg text-nexusGreen transition-colors">
                             <?= $user_info["user_name"] ?>
                         </p>
                         <div class="flex items-center justify-end gap-1">
@@ -162,10 +162,10 @@ if (!$isloggedin) { ?>
                             <p class="text-[10px] font-mono uppercase text-gray-500">Online</p>
                         </div>
                     </div>
-                    <a href="./pages/profile.php">
+                    <a href="profile.php">
                         <div class="relative w-10 h-10">
-                            <div class="absolute inset-0 rounded-lg border border-white/20 group-hover:border-nexusGreen transition-colors"></div>
-                            <img src="<?= $_SESSION["profile"] ?>" class="w-full h-full rounded-lg object-cover p-0.5">
+                            <div class="absolute inset-0 rounded-lg border  border-nexusGreen transition-colors"></div>
+                            <img src="<?= $user_info["profile_img"] ?>" class="w-full h-full rounded-lg object-cover p-0.5">
                         </div>
                     </a>
 
