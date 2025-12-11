@@ -54,12 +54,12 @@ class Friend extends db
         }
     }
 
-    public function acceptFriendRequest($sender_id,$receiver_id){
-        $query = "UPDATE friend_request SET status = :accepted WHERE status = :pending AND sender_id = :sender_id AND
+    public function acceptFriendRequest($sender_id,$receiver_id,$status){
+        $query = "UPDATE friend_request SET status = :status WHERE status = :pending AND sender_id = :sender_id AND
         receiver_id = :receiver_id";
         $stmt = $this->connect()->prepare($query);
         $stmt->bindValue(":pending",'pending');
-        $stmt->bindValue(":accepted",'accepted');
+        $stmt->bindParam(":status",$status);
         $stmt->bindParam(":sender_id",$sender_id);
         $stmt->bindParam(":receiver_id",$receiver_id);
 
