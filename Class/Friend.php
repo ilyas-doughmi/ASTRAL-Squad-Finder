@@ -85,4 +85,28 @@ class Friend extends db
             return $e->getMessage();
         }
     }
+
+    public function isFriend($user_id,$friend_id){
+        $query = "SELECT * FROM friend_request WHERE status = 'accepted' AND 
+        (receiver_id = :user_id AND sender_id = :friend_id)
+        OR(reveiver_id = :friend_id AND sender_id = :user_id)";
+
+        $stmt = $this->connect()->prepare($query);
+        $stmt->bindParam(":user_id",$user_id);
+        $stmt->bindParam(":friend_id",$friend_id);
+        
+        try{
+
+            $stmt->execute();
+            if($stmt->fetchAll(PDO::FETCH_ASSOC)){
+                return true;
+            }
+            else{
+                return false;
+            }
+
+        }catch(PDOException $e){
+            return $e->getMessage();
+        }
+    }
 }
