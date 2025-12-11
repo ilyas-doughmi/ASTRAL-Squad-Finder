@@ -71,4 +71,18 @@ class Friend extends db
             return $e->getMessage();
         }
     }
+
+    public function getUserFriends($user_id){
+        $query = "SELECT * FROM friend_request WHERE (receiver_id = :user_id OR sender_id = :user_id) AND status = 'accepted'";
+        $stmt = $this->connect()->prepare($query);
+        $stmt->bindParam(":user_id",$user_id);
+        
+        try{
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);   
+
+        }catch(PDOException $e){
+            return $e->getMessage();
+        }
+    }
 }
