@@ -15,7 +15,7 @@ require_once("../Class/Friend.php");
 $user = new User;
 $friend = new Friend;
 $user_info = $user->getUserInfo($_SESSION["id"]);
-$all_users = $user->getAllUsers($_SESSION["id"]);
+
 
 ?>
 
@@ -197,78 +197,7 @@ $all_users = $user->getAllUsers($_SESSION["id"]);
             <button class="px-4 py-2 bg-[#0f0f0f] text-gray-400 hover:text-white font-bold uppercase text-xs tracking-wider rounded border border-white/10 hover:border-white/30 transition-colors">League</button>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-            <?php if (count($all_users)  == 0) { ?>
-                <h1>no user found</h1>
-            <?php  } else { ?>
-                <?php foreach ($all_users as $all) { 
-                    if(!$friend->isFriend($_SESSION["id"],$all["id"])){?>
-                         <div class="group relative bg-[#0f0f0f] border border-white/10 rounded-2xl p-1 hover:border-nexusGreen/50 transition-all duration-300 hover:-translate-y-1">
-                        <div class="absolute inset-0 bg-nexusGreen/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-
-                        <div class="relative bg-[#0a0a0a] rounded-xl p-5 h-full flex flex-col items-center text-center overflow-hidden">
-
-                            <div class="absolute top-3 right-3 z-10">
-                                <i class="fa-brands fa-steam text-gray-600 group-hover:text-nexusGreen transition-colors"></i>
-                            </div>
-
-                            <div class="w-20 h-20 rounded-xl mb-4 p-0.5 border-2 border-white/10 group-hover:border-nexusGreen transition-colors relative">
-                                <img src="<?= $all["profile_img"] ?>" class="w-full h-full rounded-[10px] object-cover">
-                                <div class="absolute -bottom-2 -right-2 bg-purple-900 text-purple-200 text-[10px] font-bold px-2 py-0.5 rounded border border-purple-500 shadow-lg ">
-                                    <?= $all["rank"] ?>
-                                </div>
-                            </div>
-
-                            <h3 class="text-xl font-heading font-bold text-white mb-1"><?= $all["user_name"] ?></h3>
-                            <p class="text-xs text-gray-500 font-mono uppercase tracking-wide mb-4">
-                                <i class="fa-solid fa-gamepad mr-1 text-nexusGreen"></i> <?= $all["game_playing"] ?>
-                            </p>
-
-
-
-                            <button onclick="sendinv(<?= $all["id"] ?>)" class="w-full bg-white/5 border border-white/10 text-white py-2 rounded font-heading font-bold uppercase text-sm tracking-wider hover:bg-nexusGreen hover:text-black hover:border-nexusGreen transition-all flex items-center justify-center gap-2 group-hover:shadow-[0_0_15px_rgba(207,255,4,0.3)]">
-                                <i class="fa-solid fa-user-plus"></i> Scout Player
-                            </button>
-                        </div>
-                    </div>
-
-                   <?php } else{?>
-
-                    <div class="group relative bg-[#0f0f0f] border border-white/10 rounded-2xl p-1 hover:border-blue-600/80 transition-all duration-300 hover:-translate-y-1">
-                        <div class="absolute inset-0 bg-blue-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-
-                        <div class="relative bg-[#0a0a0a] rounded-xl p-5 h-full flex flex-col items-center text-center overflow-hidden">
-
-                            <div class="absolute top-3 right-3 z-10">
-                                <i class="fa-brands fa-steam text-gray-600 group-hover:text-blue-600 transition-colors"></i>
-                            </div>
-
-                            <div class="w-20 h-20 rounded-xl mb-4 p-0.5 border-2 border-white/10 group-hover:border-blue-600 transition-colors relative">
-                                <img src="<?= $all["profile_img"] ?>" class="w-full h-full rounded-[10px] object-cover">
-                                <div class="absolute -bottom-2 -right-2 bg-purple-900 text-purple-200 text-[10px] font-bold px-2 py-0.5 rounded border border-purple-500 shadow-lg ">
-                                    <?= $all["rank"] ?>
-                                </div>
-                            </div>
-
-                            <h3 class="text-xl font-heading font-bold text-white mb-1"><?= $all["user_name"] ?></h3>
-                            <p class="text-xs text-gray-500 font-mono uppercase tracking-wide mb-4">
-                                <i class="fa-solid fa-gamepad mr-1 text-blue-600"></i> <?= $all["game_playing"] ?>
-                            </p>
-
-
-                        
-                            <button class="w-full bg-white/5 border border-white/10 text-white py-2 rounded font-heading font-bold uppercase text-sm tracking-wider hover:bg-blue-600/50 hover:text-white hover:border-blue-600 transition-all flex items-center justify-center gap-2 group-hover:shadow-[0_0_15px_rgba(207,255,4,0.3)]">
-                                <i class="fa-solid fa-message"></i> Message
-                            </button>
-                        </div>
-                    </div>
-                 <?php  }?>
-                   
-                <?php  } ?>
-            <?php } ?>
-
-
+        <div id="players_container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
 
         </div>
@@ -276,36 +205,96 @@ $all_users = $user->getAllUsers($_SESSION["id"]);
     </main>
 
     <script>
-        function sendinv(id) {
-            let data = new FormData();
+    const players_container = document.getElementById("players_container");
 
-            data.append("receiver_id", id);
+    function renderUserList(users) {
+        players_container.innerHTML = "";
 
-            fetch("../Includes/friend_request/add_friend.php", {                 
-                    method: "POST",
-                    body: data
-                })
-                .then(response=>response.text())
-                .then(data => {
-                    console.log(data);
-                })
+        if (users.length === 0) {
+            players_container.innerHTML = '<div class="col-span-full text-center text-gray-500 py-10">No agents found matching your query.</div>';
+            return;
+        }
 
-            }
+        users.forEach(e => {
+            const card = `
+            <div class="group relative bg-[#0f0f0f] border border-white/10 rounded-2xl p-1 hover:border-nexusGreen/50 transition-all duration-300 hover:-translate-y-1">
+                <div class="absolute inset-0 bg-nexusGreen/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
-            function search_user(username){
-                let data = new FormData();
-                data.append("username",username);
+                <div class="relative bg-[#0a0a0a] rounded-xl p-5 h-full flex flex-col items-center text-center overflow-hidden">
 
-                fetch("../Includes/searchUser.php",{
-                    method: "POST",
-                    body: data
-                })
-                .then(response=>response.json())
-                .then(data=>{
-                    console.log(data);
-                })
-            }
-    </script>
+                    <div class="absolute top-3 right-3 z-10">
+                        <i class="fa-brands fa-steam text-gray-600 group-hover:text-nexusGreen transition-colors"></i>
+                    </div>
+
+                    <div class="w-20 h-20 rounded-xl mb-4 p-0.5 border-2 border-white/10 group-hover:border-nexusGreen transition-colors relative">
+                        <img src="${e.profile_img}" class="w-full h-full rounded-[10px] object-cover">
+                        <div class="absolute -bottom-2 -right-2 bg-purple-900 text-purple-200 text-[10px] font-bold px-2 py-0.5 rounded border border-purple-500 shadow-lg ">
+                            ${e.rank}
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-heading font-bold text-white mb-1">${e.user_name}</h3>
+                    <p class="text-xs text-gray-500 font-mono uppercase tracking-wide mb-4">
+                        <i class="fa-solid fa-gamepad mr-1 text-nexusGreen"></i> ${e.game_playing}
+                    </p>
+
+                    <button onclick="sendinv(${e.id})" class="w-full bg-white/5 border border-white/10 text-white py-2 rounded font-heading font-bold uppercase text-sm tracking-wider hover:bg-nexusGreen hover:text-black hover:border-nexusGreen transition-all flex items-center justify-center gap-2 group-hover:shadow-[0_0_15px_rgba(207,255,4,0.3)]">
+                        <i class="fa-solid fa-user-plus"></i> Scout Player
+                    </button>
+                </div>
+            </div>`;
+            
+            players_container.insertAdjacentHTML("beforeend", card);
+        });
+    }
+
+    function showUsers() {
+        fetch("../Includes/fetch_users.php", {
+            method: "POST"
+        })
+        .then(response => response.json())
+        .then(data => {
+            renderUserList(data); 
+        });
+    }
+    
+    showUsers();
+
+    function search_user(username) {
+        if(username.trim() === "") {
+            showUsers();
+            return;
+        }
+
+        let data = new FormData();
+        data.append("username", username);
+
+        fetch("../Includes/searchUser.php", {
+            method: "POST",
+            body: data
+        })
+        .then(response => response.json())
+        .then(data => {
+            renderUserList(data); 
+        })
+        .catch(error => console.error("Error:", error));
+    }
+
+    function sendinv(id) {
+        let data = new FormData();
+        data.append("receiver_id", id);
+
+        fetch("../Includes/friend_request/add_friend.php", {
+            method: "POST",
+            body: data
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log(data);
+            alert(data);
+        });
+    }
+</script>
 </body>
 
 </html>
