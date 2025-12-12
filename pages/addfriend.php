@@ -181,7 +181,7 @@ $all_users = $user->getAllUsers($_SESSION["id"]);
 
             <form action="" method="GET" class="w-full md:w-auto flex gap-0 relative group">
                 <div class="absolute inset-0 bg-nexusGreen/20 blur-lg rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <input type="text" name="search" placeholder="Search Username or ID..."
+                <input type="text"  name="search" placeholder="Search Username or ID..." oninput="search_user(this.value)"
                     class="relative z-10 bg-[#0f0f0f] border border-white/10 border-r-0 rounded-l-lg px-6 py-4 w-full md:w-80 text-white focus:outline-none focus:border-nexusGreen transition-colors placeholder-gray-600 font-mono text-sm">
                 <button type="submit" class="relative z-10 bg-white/5 border border-white/10 border-l-0 rounded-r-lg px-6 hover:bg-nexusGreen hover:text-black hover:border-nexusGreen transition-all text-gray-400">
                     <i class="fa-solid fa-magnifying-glass"></i>
@@ -290,6 +290,20 @@ $all_users = $user->getAllUsers($_SESSION["id"]);
                     console.log(data);
                 })
 
+            }
+
+            function search_user(username){
+                let data = new FormData();
+                data.append("username",username);
+
+                fetch("../Includes/searchUser.php",{
+                    method: "POST",
+                    body: data
+                })
+                .then(response=>response.json())
+                .then(data=>{
+                    console.log(data);
+                })
             }
     </script>
 </body>
