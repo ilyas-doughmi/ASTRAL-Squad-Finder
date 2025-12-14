@@ -69,12 +69,13 @@ class User extends db {
         }
     }
 
-    public function SearchUser($user_name){
-        $query = "SELECT * FROM users WHERE user_name LIKE :username";
+    public function SearchUser($user_name,$myusername){
+        $query = "SELECT * FROM users WHERE user_name != :myusername AND user_name LIKE :username";
         $stmt = $this->connect()->prepare($query);
         $search = "%".$user_name."%";
 
         $stmt->bindParam(":username",$search);
+        $stmt->bindParam(":myusername",$myusername);
         
         
         try{
